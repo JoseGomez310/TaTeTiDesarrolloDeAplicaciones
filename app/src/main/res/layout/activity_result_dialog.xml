@@ -50,7 +50,7 @@
             android:layout_margin="20dp"
             android:backgroundTint="@color/white"
             android:text="Jugar otra vez"
-            android:textColor="@color/verde_claro"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="20dp" />
@@ -62,7 +62,7 @@
             android:layout_margin="20dp"
             android:backgroundTint="@color/white"
             android:text="Inicio"
-            android:textColor="@color/verde_claro"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="20dp" />

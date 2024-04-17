@@ -39,7 +39,7 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="@drawable/circulo"
+                android:background="@drawable/logo_juego"
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp">
 

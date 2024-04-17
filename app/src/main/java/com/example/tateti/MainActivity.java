@@ -234,23 +234,6 @@ public class MainActivity extends AppCompatActivity {
         return response;
     }
 
-    public void reiniciarJuego(){  //Reinicia el juego
-        boxPositions=new int[] {0,0,0,0,0,0,0,0,0};
-        turno=1;
-        boxesSeleccionadas=1;
-
-        binding.image1.setImageResource(R.drawable.white_box);
-        binding.image2.setImageResource(R.drawable.white_box);
-        binding.image3.setImageResource(R.drawable.white_box);
-        binding.image4.setImageResource(R.drawable.white_box);
-        binding.image5.setImageResource(R.drawable.white_box);
-        binding.image6.setImageResource(R.drawable.white_box);
-        binding.image7.setImageResource(R.drawable.white_box);
-        binding.image8.setImageResource(R.drawable.white_box);
-        binding.image9.setImageResource(R.drawable.white_box);
-
-    }
-
     public void juegaMaquina(){
         int minimo = 1; // Valor mínimo
         int maximo = 9; // Valor máximo

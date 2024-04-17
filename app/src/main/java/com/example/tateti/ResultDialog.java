@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -29,15 +30,23 @@ public class ResultDialog extends AppCompatActivity {
         Button inicio=findViewById(R.id.botonInicio);
         String resultadoGanador=getIntent().getStringExtra("ganador");
         String nombreJugador=getIntent().getStringExtra("nombreJugador");
+        RelativeLayout main=findViewById(R.id.main);
 
         if (Objects.equals(resultadoGanador, "jugador")){
             mensajeResultado.setText(nombreJugador);
+            if (jugarConCruces==true){
+                main.setBackgroundResource(R.drawable.fondo_cian);
+            }
         } else if (Objects.equals(resultadoGanador, "maquina")) {
             mensajeResultado.setText("Maquina");
             mensajeResultadoAbajo.setText("es la ganadora");
+            if (jugarConCruces==false){
+                main.setBackgroundResource(R.drawable.fondo_cian);
+            }
         }else{
+            main.setBackgroundResource(R.drawable.fondo_amarillo);
             mensajeResultado.setText("El resultado");
-            mensajeResultadoAbajo.setText("salio empate");
+            mensajeResultadoAbajo.setText("es empate");
         }
 
         reiniciar.setOnClickListener(new View.OnClickListener() {
