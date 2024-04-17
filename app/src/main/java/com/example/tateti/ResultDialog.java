@@ -21,6 +21,7 @@ public class ResultDialog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_result_dialog);
+        boolean jugarConCruces=getIntent().getBooleanExtra("jugarConCruces",true);
 
         TextView mensajeResultado=findViewById(R.id.messageText);
         TextView mensajeResultadoAbajo=findViewById(R.id.messageTextAbajo);
@@ -43,7 +44,8 @@ public class ResultDialog extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ResultDialog.this, MainActivity.class);
-                intent.putExtra("jugadorNombreReinicio",nombreJugador);
+                intent.putExtra("jugadorNombre",nombreJugador);
+                intent.putExtra("jugarConCruces",jugarConCruces);
                 startActivity(intent);
             }
         });

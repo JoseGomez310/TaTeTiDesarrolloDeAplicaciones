@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ganador",ganador);
                 String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
                 intent.putExtra("nombreJugador",getNombreJugador);
+                intent.putExtra("jugarConCruces",jugarConCruces);
                 startActivity(intent);
                 //Ganó el jugador
                 //pendiente
@@ -161,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (boxesSeleccionadas == 9) {
                 Intent intent = new Intent(MainActivity.this, ResultDialog.class);
                 intent.putExtra("ganador",ganador);
+                String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
+                intent.putExtra("nombreJugador",getNombreJugador);
+                intent.putExtra("jugarConCruces",jugarConCruces);
                 startActivity(intent);
                 //juego empatado
             } else {
@@ -178,12 +182,19 @@ public class MainActivity extends AppCompatActivity {
                 ganador="maquina";
                 Intent intent = new Intent(MainActivity.this, ResultDialog.class);
                 intent.putExtra("ganador",ganador);
+                String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
+                intent.putExtra("nombreJugador",getNombreJugador);
+                intent.putExtra("jugarConCruces",jugarConCruces);
                 startActivity(intent);
                 //ganó la maquina
                 //pendiente
 
             } else if (boxesSeleccionadas == 9) {
                 Intent intent = new Intent(MainActivity.this, ResultDialog.class);
+                String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
+                intent.putExtra("nombreJugador",getNombreJugador);
+                intent.putExtra("jugarConCruces",jugarConCruces);
+                startActivity(intent);
                 //juego empatado
             } else {
                 cambiarTurno(1);
