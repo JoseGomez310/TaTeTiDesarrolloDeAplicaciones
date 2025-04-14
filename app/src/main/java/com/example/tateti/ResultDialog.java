@@ -30,6 +30,7 @@ public class ResultDialog extends AppCompatActivity {
         Button inicio=findViewById(R.id.botonInicio);
         String resultadoGanador=getIntent().getStringExtra("ganador");
         String nombreJugador=getIntent().getStringExtra("nombreJugador");
+        String dificultad=getIntent().getStringExtra("dificultad");
         RelativeLayout main=findViewById(R.id.main);
 
         if (Objects.equals(resultadoGanador, "jugador")){
@@ -55,6 +56,7 @@ public class ResultDialog extends AppCompatActivity {
                 Intent intent = new Intent(ResultDialog.this, MainActivity.class);
                 intent.putExtra("jugadorNombre",nombreJugador);
                 intent.putExtra("jugarConCruces",jugarConCruces);
+                intent.putExtra("dificultad",dificultad);
                 startActivity(intent);
             }
         });

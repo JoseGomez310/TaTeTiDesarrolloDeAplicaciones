@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private int[] boxPositions={0,0,0,0,0,0,0,0,0}; //Tablero 0(nadie) 1(jugador) 2(maquina)
     private int turno=1; //turno del jugador 1(jugador) 2(maquina)
     private int boxesSeleccionadas=1; //casillas seleccionadas
+
+    private enum Dificultad { FACIL, MEDIA, DIFICIL }
+    private Dificultad dificultadSeleccionada = Dificultad.DIFICIL; // Puedes setear esto desde el Intent o un Spinner
 
     String ganador="empate";
 
@@ -42,9 +46,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
+        String dificultadString = getIntent().getStringExtra("dificultad");
+        if (dificultadString != null) {
+            switch (dificultadString) {
+                case "FACIL": dificultadSeleccionada = Dificultad.FACIL; break;
+                case "MEDIA": dificultadSeleccionada = Dificultad.MEDIA; break;
+                case "DIFICIL": dificultadSeleccionada = Dificultad.DIFICIL; break;
+            }
+        }
+        else{
+            dificultadSeleccionada=Dificultad.FACIL;
+        }
 
 
         binding.jugadorNombre.setText(getNombreJugador); //Se recupero el nombre y se coloca en el lugar
+        Toast.makeText(this, "Dificultad: " + dificultadSeleccionada.name(), Toast.LENGTH_SHORT).show();
 
         boolean jugarConCruces=getIntent().getBooleanExtra("jugarConCruces",true); //recupera jugarConCruces de la pantalla anterior
 
@@ -154,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
                 String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
                 intent.putExtra("nombreJugador",getNombreJugador);
                 intent.putExtra("jugarConCruces",jugarConCruces);
+                String dificultadString = getIntent().getStringExtra("dificultad");
+                intent.putExtra("dificultad",dificultadString);
                 startActivity(intent);
                 //Ganó el jugador
                 //pendiente
@@ -165,6 +183,8 @@ public class MainActivity extends AppCompatActivity {
                 String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
                 intent.putExtra("nombreJugador",getNombreJugador);
                 intent.putExtra("jugarConCruces",jugarConCruces);
+                String dificultadString = getIntent().getStringExtra("dificultad");
+                intent.putExtra("dificultad",dificultadString);
                 startActivity(intent);
                 //juego empatado
             } else {
@@ -185,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
                 String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
                 intent.putExtra("nombreJugador",getNombreJugador);
                 intent.putExtra("jugarConCruces",jugarConCruces);
+                String dificultadString = getIntent().getStringExtra("dificultad");
+                intent.putExtra("dificultad",dificultadString);
                 startActivity(intent);
                 //ganó la maquina
                 //pendiente
@@ -194,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 String getNombreJugador=getIntent().getStringExtra("jugadorNombre");
                 intent.putExtra("nombreJugador",getNombreJugador);
                 intent.putExtra("jugarConCruces",jugarConCruces);
+                String dificultadString = getIntent().getStringExtra("dificultad");
+                intent.putExtra("dificultad",dificultadString);
                 startActivity(intent);
                 //juego empatado
             } else {
@@ -234,67 +258,181 @@ public class MainActivity extends AppCompatActivity {
         return response;
     }
 
-    public void juegaMaquina(){
-        int minimo = 1; // Valor mínimo
-        int maximo = 9; // Valor máximo
-        int boxRandom = (int) (Math.random() * (maximo - minimo + 1)) + minimo;
-        while (isBoxSeleccionable(boxRandom-1)==false){
-            boxRandom = (int) (Math.random() * (maximo - minimo + 1)) + minimo;
+    public void juegaMaquina() {
+        switch (dificultadSeleccionada) {
+            case FACIL:
+                juegaFacil();
+                break;
+            case MEDIA:
+                juegaMedia();
+                break;
+            case DIFICIL:
+                juegaDificil();
+                break;
         }
-        if (boxRandom==1){
-            ImageView view=binding.image1;
-            if (isBoxSeleccionable(0)){
-                performanceAction(view,0);
-            }
+    }
+    public void juegaFacil() {
+        int boxRandom = (int) (Math.random() * 9);
+        while (!isBoxSeleccionable(boxRandom)) {
+            boxRandom = (int) (Math.random() * 9);
         }
-        if (boxRandom==2){
-            ImageView view=binding.image2;
-            if (isBoxSeleccionable(1)){
-                performanceAction(view,1);
-            }
-        }
-        if (boxRandom==3){
-            ImageView view=binding.image3;
-            if (isBoxSeleccionable(2)){
-                performanceAction(view,2);
-            }
-        }
-        if (boxRandom==4){
-            ImageView view=binding.image4;
-            if (isBoxSeleccionable(3)){
-                performanceAction(view,3);
-            }
-        }
-        if (boxRandom==5){
-            ImageView view=binding.image5;
-            if (isBoxSeleccionable(4)){
-                performanceAction(view,4);
-            }
-        }
-        if (boxRandom==6){
-            ImageView view=binding.image6;
-            if (isBoxSeleccionable(5)){
-                performanceAction(view,5);
-            }
-        }
-        if (boxRandom==7){
-            ImageView view=binding.image7;
-            if (isBoxSeleccionable(6)){
-                performanceAction(view,6);
-            }
-        }
-        if (boxRandom==8){
-            ImageView view=binding.image8;
-            if (isBoxSeleccionable(7)){
-                performanceAction(view,7);
-            }
-        }
-        if (boxRandom==9){
-            ImageView view=binding.image9;
-            if (isBoxSeleccionable(8)){
-                performanceAction(view,8);
+        realizarMovimientoMaquina(boxRandom);
+    }
+    public void juegaMedia() {
+        // 1. Ver si la máquina puede ganar en el próximo movimiento
+        for (int i = 0; i < 9; i++) {
+            if (isBoxSeleccionable(i)) {
+                boxPositions[i] = 2; // Supongamos que la máquina juega aquí
+                if (chequearResultados()) {
+                    realizarMovimientoMaquina(i);
+                    return;
+                }
+                boxPositions[i] = 0; // Deshacer movimiento
             }
         }
 
+        // 2. Ver si el jugador puede ganar en el próximo movimiento y bloquear
+        for (int i = 0; i < 9; i++) {
+            if (isBoxSeleccionable(i)) {
+                boxPositions[i] = 1; // Supongamos que el jugador juega aquí
+                if (chequearResultados()) {
+                    boxPositions[i] = 0; // Deshacer movimiento
+                    realizarMovimientoMaquina(i);
+                    return;
+                }
+                boxPositions[i] = 0; // Deshacer movimiento
+            }
+        }
+
+        // 3. Tomar el centro si está libre
+        if (isBoxSeleccionable(4)) {
+            realizarMovimientoMaquina(4);
+            return;
+        }
+
+        // 4. Tomar una esquina si está libre
+        int[] esquinas = {0, 2, 6, 8};
+        for (int esquina : esquinas) {
+            if (isBoxSeleccionable(esquina)) {
+                realizarMovimientoMaquina(esquina);
+                return;
+            }
+        }
+
+        // 5. Elegir cualquier otra casilla libre
+        for (int i = 0; i < 9; i++) {
+            if (isBoxSeleccionable(i)) {
+                realizarMovimientoMaquina(i);
+                return;
+            }
+        }
     }
+
+    // Este método asocia el índice con su ImageView correspondiente
+    private void realizarMovimientoMaquina(int posicion) {
+        ImageView view = null;
+        switch (posicion) {
+            case 0: view = binding.image1; break;
+            case 1: view = binding.image2; break;
+            case 2: view = binding.image3; break;
+            case 3: view = binding.image4; break;
+            case 4: view = binding.image5; break;
+            case 5: view = binding.image6; break;
+            case 6: view = binding.image7; break;
+            case 7: view = binding.image8; break;
+            case 8: view = binding.image9; break;
+        }
+        if (view != null) {
+            performanceAction(view, posicion);
+        }
+    }
+
+    public void juegaDificil() {
+        int mejorPuntaje = Integer.MIN_VALUE;
+        int mejorMovimiento = -1;
+
+        for (int i = 0; i < 9; i++) {
+            if (boxPositions[i] == 0) {
+                boxPositions[i] = 2;
+                int puntaje = minimax(boxPositions.clone(), false, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                boxPositions[i] = 0;
+
+                if (puntaje > mejorPuntaje || (puntaje == mejorPuntaje && esMejorPosicion(i, mejorMovimiento))) {
+                    mejorPuntaje = puntaje;
+                    mejorMovimiento = i;
+                }
+            }
+        }
+
+        if (mejorMovimiento != -1) {
+            realizarMovimientoMaquina(mejorMovimiento);
+        } else {
+            juegaFacil(); // fallback en caso de error
+        }
+    }
+
+    private int minimax(int[] tablero, boolean esTurnoJugador, int profundidad, int alfa, int beta) {
+        if (chequearGanador(tablero, 2)) return 10 - profundidad;
+        if (chequearGanador(tablero, 1)) return profundidad - 10;
+        if (esEmpate(tablero)) return 0;
+
+        if (esTurnoJugador) {
+            int mejor = Integer.MAX_VALUE;
+            for (int i = 0; i < 9; i++) {
+                if (tablero[i] == 0) {
+                    tablero[i] = 1;
+                    int score = minimax(tablero, false, profundidad + 1, alfa, beta);
+                    tablero[i] = 0;
+                    mejor = Math.min(mejor, score);
+                    beta = Math.min(beta, score);
+                    if (beta <= alfa) break;
+                }
+            }
+            return mejor;
+        } else {
+            int mejor = Integer.MIN_VALUE;
+            for (int i = 0; i < 9; i++) {
+                if (tablero[i] == 0) {
+                    tablero[i] = 2;
+                    int score = minimax(tablero, true, profundidad + 1, alfa, beta);
+                    tablero[i] = 0;
+                    mejor = Math.max(mejor, score);
+                    alfa = Math.max(alfa, score);
+                    if (beta <= alfa) break;
+                }
+            }
+            return mejor;
+        }
+    }
+
+    private boolean chequearGanador(int[] tablero, int jugador) {
+        return (tablero[0] == jugador && tablero[1] == jugador && tablero[2] == jugador) ||
+                (tablero[3] == jugador && tablero[4] == jugador && tablero[5] == jugador) ||
+                (tablero[6] == jugador && tablero[7] == jugador && tablero[8] == jugador) ||
+                (tablero[0] == jugador && tablero[3] == jugador && tablero[6] == jugador) ||
+                (tablero[1] == jugador && tablero[4] == jugador && tablero[7] == jugador) ||
+                (tablero[2] == jugador && tablero[5] == jugador && tablero[8] == jugador) ||
+                (tablero[0] == jugador && tablero[4] == jugador && tablero[8] == jugador) ||
+                (tablero[2] == jugador && tablero[4] == jugador && tablero[6] == jugador);
+    }
+
+    private boolean esEmpate(int[] tablero) {
+        for (int casilla : tablero) {
+            if (casilla == 0) return false;
+        }
+        return true;
+    }
+
+    private boolean esMejorPosicion(int nueva, int anterior) {
+        int[] prioridad = {4, 0, 2, 6, 8, 1, 3, 5, 7}; // centro > esquinas > bordes
+        int prioridadNueva = 1000, prioridadAnterior = 1000;
+
+        for (int i = 0; i < prioridad.length; i++) {
+            if (prioridad[i] == nueva) prioridadNueva = i;
+            if (prioridad[i] == anterior) prioridadAnterior = i;
+        }
+
+        return prioridadNueva < prioridadAnterior;
+    }
+
 }
